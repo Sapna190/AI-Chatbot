@@ -8,8 +8,7 @@ function App() {
 
   return (
     <>
-      <h1>AI-Chatbot</h1><textarea> Enter your text here
-      </textarea>
+      <h1>AI-Chatbot</h1>
     </>
   )
 }
