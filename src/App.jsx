@@ -14,7 +14,7 @@ function App() {
       method:"post",
       data:{contents:[{parts:[{text:question}]}]}
     });
-    setAnswer(response['data']['candidates'][0]['content']['parts'][0]['text']);
+    (setAnswer(response['data']['candidates'][0]['content']['parts'][0]['text']));
   }
 
   return (
