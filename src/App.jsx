@@ -22,7 +22,7 @@ function App() {
       <h1>AI-Chatbot</h1>
       <textarea value={question} onChange={(e) => setQuestion(e.target.value)} col="100" row="20"></textarea>
       <button onClick={generateAnswer}>Generate answer</button>
-      <pre><div></div></pre>
+      <pre></pre>
     </>
   )
 }
