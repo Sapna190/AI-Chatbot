@@ -23,7 +23,7 @@ function App() {
       <textarea value={question} onChange={(e) => setQuestion(e.target.value)} col="100" row="20"></textarea>
       <button onClick={generateAnswer}>Generate answer</button>
       <pre></pre>
-      <div></div>
+      
     </>
   )
 }
