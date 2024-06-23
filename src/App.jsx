@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Component, useState } from 'react';
 import axios from 'axios';
 import './App.css';
 
@@ -22,8 +22,8 @@ function App() {
       <h1>AI-Chatbot</h1>
       <textarea value={question} onChange={(e) => setQuestion(e.target.value)} col="100" row="20"></textarea>
       <button onClick={generateAnswer}>Generate answer</button>
-      <pre></pre>
-      
+      <pre>{answer}</pre>
+      <Component/>
     </>
   )
 }
