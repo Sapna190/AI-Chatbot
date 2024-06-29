@@ -1,6 +1,7 @@
-import { Component, useState } from 'react';
+import {  useState } from 'react';
 import axios from 'axios';
 import './App.css';
+
 
 function App() {
   const [question, setQuestion] = useState("");
@@ -19,13 +20,25 @@ function App() {
 
   return (
     <>
-      <h1>AI-Chatbot</h1>
-      <textarea value={question} onChange={(e) => setQuestion(e.target.value)} col="100" row="20"></textarea>
-      <button onClick={generateAnswer}>Generate answer</button>
-      <pre>{answer}</pre>
-      <Component/>
+      <div className='chatbot'>
+        <header>AI-Chatbot</header>
+        <div className='ai'>
+        <img src="icon3.png" alt="robot" />
+        <p>Hii....there!</p>
+        <p>This is your AI assistant</p>
+        </div>
+        
+        <ul className='chatbox'>
+          <li className='chat incoming'>
+            <span className='material-symbols-outlined'></span>
+          </li>
+        </ul>
+        <textarea value={question} onChange={(e) => setQuestion(e.target.value)} col="100" row="20"></textarea>
+      </div>
     </>
-  )
+) 
 }
 
 export default App
+
+

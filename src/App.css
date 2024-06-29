@@ -1,42 +1,35 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:regular,bold,italic&subset=latin,latin-ext');
+
+#root{
+ background-color: white;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.chatbot{
+  position: fixed;
+  right: 25%;
+  top:40px;
+  bottom:40px;
+  width: 50%;
+  background: white;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.chatbot header{
+  margin-top: 0%;
+  background-color: #3B76CD;
+  color: black;
+  padding: 14px;
+  font-size: 25px;
+  font-family: "Josefin Sans", sans-serif;
+  text-shadow: 0 0 3px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+.chatbot textarea{
+  background-color: #D9D9D9;
+  border-radius: 30px;
+  bottom: 5px;
+  width: 600px;
+  align-items: center;
+  padding: 7px;
+  border-style: none;
+  left:20%;
 }
