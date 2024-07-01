@@ -35,7 +35,7 @@ function App() {
         </ul>
         <textarea value={question} onChange={(e) => setQuestion(e.target.value)} col="100" row="20"></textarea>
       </div>
-      <div></div>
+      
     </>
 ) 
 }
