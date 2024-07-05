@@ -25,7 +25,7 @@ function App() {
         <div className='ai'>
         <img src="icon3.png" alt="robot"  />
         <p>Hii....there!<br></br>
-        This is your AI assistant</p>
+        This is your AI assistant.</p>
         </div>
         
         <ul className='chatbox'>
