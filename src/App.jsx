@@ -23,9 +23,9 @@ function App() {
       <div className='chatbot'>
         <header>AI-Chatbot</header>
         <div className='ai'>
-        <img src="icon3.png" alt="robot" />
-        <p>Hii....there!</p>
-        <p>This is your AI assistant</p>
+        <img src="icon3.png" alt="robot"  />
+        <p>Hii....there!<br></br>
+        This is your AI assistant</p>
         </div>
         
         <ul className='chatbox'>
@@ -35,7 +35,7 @@ function App() {
         </ul>
         <textarea value={question} onChange={(e) => setQuestion(e.target.value)} col="100" row="20"></textarea>
       </div>
-      <div></div>
+     
     </>
 ) 
 }

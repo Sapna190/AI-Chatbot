@@ -20,7 +20,7 @@
   padding: 14px;
   font-size: 25px;
   font-family: "Josefin Sans", sans-serif;
-  text-shadow: 0 0 3px;
+  text-shadow: 1px 0 2px;
 }
 
 .chatbot textarea{
@@ -33,3 +33,20 @@
   border-style: none;
   left:20%;
 }
+
+.ai{
+  display: flex;
+  gap: 20px;
+}
+
+.ai img{
+  width: 40%;
+}
+
+.ai p{
+  color: black;
+  padding-top: 2.5rem;
+  display: block;
+  
+}
+
