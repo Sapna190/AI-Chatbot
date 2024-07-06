@@ -19,25 +19,27 @@ function App() {
   }
 
   return (
-    <>
+      <>
       <div className='chatbot'>
         <header>AI-Chatbot</header>
         <div className='ai'>
         <img src="icon3.png" alt="robot"  />
-        <p>Hii....there!<br></br>
-        This is your AI assistant.</p>
-        </div>
-        
-        <ul className='chatbox'>
-          <li className='chat incoming'>
-            <span className='material-symbols-outlined'></span>
-          </li>
-        </ul>
-        <textarea value={question} onChange={(e) => setQuestion(e.target.value)} col="100" row="20"></textarea>
+        <p>Hii....there!<br></br>This is your AI assistant.</p>
       </div>
-     
-    </>
-) 
+        <ul className="chatbox">
+            <li className="chat-incoming chat">
+                <p>Hey! How can I assist you today?</p>
+            </li>
+        </ul>
+        <div className="chat-input">
+            <textarea rows="0"  cols="10"
+                      placeholder="Enter a message..."></textarea>
+            <button id="sendbtn">Send</button>
+        </div>
+      </div>
+      
+      </>
+);
 }
 
 export default App
