@@ -37,7 +37,7 @@ function App() {
             <button id="sendbtn">Send</button>
         </div>
       </div>
-      
+      <div>~</div>
       </>
 );
 }
