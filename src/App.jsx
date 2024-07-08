@@ -26,6 +26,7 @@ function App() {
         <img src="icon3.png" alt="robot"  />
         <p>Hii....there!<br></br>This is your AI assistant.</p>
       </div>
+
         <ul className="chatbox">
             <li className="chat-incoming chat">
                 <p>Hey! How can I assist you today?</p>
@@ -37,9 +38,14 @@ function App() {
             <button id="sendbtn">Send</button>
         </div>
       </div>
-      <div>~</div>
+      <div></div>
       </>
+
+
+    
+   
 );
+
 }
 
 export default App
