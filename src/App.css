@@ -62,3 +62,80 @@
  
 }
 
+
+.chatbox {
+  padding: 15px;
+  list-style: none;
+  overflow-y: auto;
+  height: 400px;
+}
+ 
+.chatbox li {
+  margin-bottom: 10px;
+}
+ 
+.chat p {
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 70%;
+  word-wrap: break-word;
+}
+ 
+.chat-outgoing p {
+  background-color: #162887;
+  align-self: flex-end;
+  color: #fff;
+}
+ 
+.chat-incoming p {
+  background-color: #eaeaea;
+}
+ 
+.chat-input {
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+ 
+.chat-input textarea {
+  width: 522px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  resize: none;
+  outline: none;
+  overflow-y: scroll;
+  background-color: #dcdcdc85;
+  font-size: 16px;
+  color: green;
+  font-weight: 600;
+  margin-top: -10px;
+  margin-left: -15px;
+  height: 71px;
+}
+
+.chatbox .chat p.error {
+  color: #ffffff;
+  background-color: #ff3737e8;
+}
+ 
+#sendBTN {
+  width: 100%;
+  padding: 8px;
+  border: 0;
+  outline: none;
+  font-size: 20px;
+  font-weight: 600;
+  border-radius: 7px;
+  background-color: #2F8D46;
+  cursor: pointer;
+  color: white;
+  margin-top: 12px;
+}
+ 
+.lastMessage {
+  margin-top: 50px;
+  font-size: 35px;
+  font-weight: 600;
+  color: darkgreen;
+  margin-left: 550px;
+}
