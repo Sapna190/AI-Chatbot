@@ -25,17 +25,26 @@ function App() {
         <div className='ai'>
         <img src="icon3.png" alt="robot"  />
         <p>Hii....there!<br></br>This is your AI assistant.</p>
-      </div>
+        </div>
 
-        <ul className="chatbox">
-            <li className="chat-incoming chat">
+        <div className="chatbox">
+        <ul>
+
+            <li className="chat outgoing">
                 <p>Hey! How can I assist you today?</p>
             </li>
+
+            <li className="chat incoming">
+            <img src="logo8.png" alt="Profile" className="profile-icon" />
+                <p>Hey!<br></br> How can I assist you today?</p>
+            </li>
+            
         </ul>
+        </div>
+        
         <div className="chat-input">
-            <textarea rows="0"  cols="10"
-                      placeholder="Enter a message..."></textarea>
-            <button id="sendbtn">Send</button>
+            <textarea placeholder="Enter here..."></textarea>
+            <button id="sendbtn" className='<i class="bi bi-send"></i>'></button>
         </div>
       </div>
       
