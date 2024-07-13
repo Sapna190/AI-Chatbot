@@ -83,13 +83,23 @@
   font-size: 1rem;
 }
 
+.chatbox .chat pre{
+  padding: 10px 15px;
+  line-height: 1.5rem;
+  align-content: right;
+  box-sizing: border-box;
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
 .incoming{
   justify-content: flex-start;
   text-align: left;
 
 }
 
-.chatbox .incoming p{
+.chatbox .incoming pre{
   border: 1px solid black;
   border-radius: 10px 10px 10px 0;
   max-width: 60%;

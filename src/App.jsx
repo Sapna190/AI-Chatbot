@@ -13,9 +13,33 @@ function App() {
   const createChatLi = (message, className) => {
     const chatLi = document.createElement("li");
     chatLi.classList.add("chat", className);
-    chatLi.innerHTML = `<p>${message}</p>`;
+    if (className === "incoming") {
+      chatLi.innerHTML = `<img src="logo8.png" alt="Profile" className="profile-icon" /> <pre>${message}</pre>`;
+    } else {
+      chatLi.innerHTML = `<p>${message}</p>`;
+    }
     return chatLi;
   };
+
+  async function generateAnswer(incomingChatLi){
+    const messageElement = incomingChatLi.querySelector("pre");
+    try{
+    const response = await axios({
+      url:"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyBinPBcEPyRSIxghwfG8QNW-rvcZ97KRAc",
+      method:"post",
+      data:{contents:[{parts:[{text:question}]}]}
+    });
+    (setAnswer(response['data']['candidates'][0]['content']['parts'][0]['text']));
+    messageElement.innerHTML = response.data.candidates[0].content.parts[0].text;
+  }
+  catch (error) {
+    setAnswer("Sorry, there was an error.");
+    messageElement.innerHTML = "Sorry, there was an error.";
+  }
+  finally {
+    chatBox.scrollTo(0, chatBox.scrollHeight);
+  }
+}
 
   const handleChat = () => {
     const chatInput = document.querySelector('.chat-input textarea');
@@ -26,22 +50,19 @@ function App() {
     const outgoingChat = createChatLi(userMessage, "outgoing");
     chatBox.appendChild(outgoingChat);
     chatInput.value = "";
+    chatBox.scrollTo(0, chatBox.scrollHeight);
+
+    setTimeout(()=>{
+      //Display thinking message..
+      const incomingChatLi = createChatLi("Thinking...","incoming")
+      chatBox.appendChild(incomingChatLi);
+      chatBox.scrollTo(0, chatBox.scrollHeight);
+      generateAnswer(incomingChatLi);
+
+    }, 600);
   };
+
   
-  async function generateAnswer(){
-    setAnswer("Loading...");
-    try{
-    const response = await axios({
-      url:"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyBinPBcEPyRSIxghwfG8QNW-rvcZ97KRAc",
-      method:"post",
-      data:{contents:[{parts:[{text:question}]}]}
-    });
-    (setAnswer(response['data']['candidates'][0]['content']['parts'][0]['text']));
-  }
-  catch (error) {
-    setAnswer("Sorry, there was an error.");
-  }
-}
 
   return (
       <>
@@ -56,9 +77,7 @@ function App() {
         <ul>
 
             <li className="chat incoming">
-            <img src="logo8.png" alt="Profile" className="profile-icon" />
-                <p>Hey!<br></br> How can I assist you today?</p>
-                <pre>{answer}</pre>
+           
             </li>
             
         </ul>
