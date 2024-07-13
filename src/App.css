@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:regular,bold,italic&subset=latin,latin-ext');
 
+
 #root{
  background-color: white;
 }
@@ -94,7 +95,7 @@
 }
 
 .chatbox .incoming img{
-  align-self: flex-end;
+ align-content: flex-start;
   margin: 0 2px 0 0;
   max-width:50px;
   height: 50px;
@@ -109,8 +110,134 @@
   border-radius: 10px 10px 0 10px ;
 }
 
-.chat-input{
+.chatbot .chat-input{
   position: absolute;
-  bottom: 0.8rem;
-  max-width: 5%;
+  display: flex;
+  width: fit-content;
+  bottom: 0.1rem;
+  gap: 13px;
+  padding:  15px;
+  margin-left:10px;
+}
+
+.chat-input textarea{
+  border: none;
+  outline: none;
+  width: 36rem;
+  font-size: 1rem;
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: bold;
+  resize: none;
+  padding: 15px 5px 1px 30px;
+}
+
+.chat-input ::placeholder{
+  color: rgb(77, 77, 77);
+}
+
+.chat-input span{
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  padding-left: 35rem;
+  color: black;
+  font-size: 1.2rem;
+  cursor: pointer;
+  align-self: center;
+  visibility: hidden;
+
+}
+
+.chat-input textarea:valid ~ span{
+  visibility: visible;
+}
+
+/*Responsive style*/
+@media (max-width: 1200px) {
+  .chatbot {
+    right: 10%;
+    width: 80%;
+  }
+
+  .ai {
+    margin-right: 10%;
+  }
+}
+
+@media (max-width: 768px) {
+  .chatbot {
+    right: 5%;
+    width: 90%;
+    top: 20px;
+    bottom: 20px;
+  }
+
+  .chatbot header {
+    font-size: 24px;
+    padding: 10px;
+  }
+
+  .ai img {
+    max-width: 40%;
+  }
+
+  .ai p {
+    font-size: 1.1rem;
+  }
+
+  .chatbox {
+    height: 250px;
+  }
+
+  .chat-input textarea {
+    width: 100%;
+    padding: 10px 5px 1px 15px;
+  }
+
+  .chat-input span {
+    padding-left: 30rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .chatbot {
+    right: 0;
+    width: 100%;
+    top: 10px;
+    bottom: 10px;
+  }
+
+  .chatbot header {
+    font-size: 20px;
+    padding: 8px;
+  }
+
+  .ai img {
+    max-width: 30%;
+  }
+
+  .ai p {
+    font-size: 1rem;
+  }
+
+  .chatbox {
+    height: 200px;
+  }
+
+  .chat-input {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .chat-input textarea {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .chat-input span {
+    position: static;
+    padding: 0;
+    margin-top: 10px;
+    visibility: visible; /* Always visible on small screens */
+  }
 }

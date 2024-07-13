@@ -1,6 +1,8 @@
 import {  useState } from 'react';
 import axios from 'axios';
 import './App.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {  faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 
 function App() {
@@ -37,14 +39,15 @@ function App() {
             <li className="chat incoming">
             <img src="logo8.png" alt="Profile" className="profile-icon" />
                 <p>Hey!<br></br> How can I assist you today?</p>
+                <pre>{answer}</pre>
             </li>
             
         </ul>
         </div>
         
         <div className="chat-input">
-            <textarea placeholder="Enter here..."></textarea>
-            <button id="sendbtn" className='<i class="bi bi-send"></i>'></button>
+            <textarea  value={question} onChange={(e) => setQuestion(e.target.value)} placeholder="Enter here..."   required></textarea>
+            <span id="sendbtn" className='send-btn' onClick={generateAnswer}><FontAwesomeIcon icon={faPaperPlane} /></span>
         </div>
       </div>
       
