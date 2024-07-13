@@ -10,8 +10,27 @@ function App() {
   const [answer, setAnswer] = useState("");
 
 
+  const createChatLi = (message, className) => {
+    const chatLi = document.createElement("li");
+    chatLi.classList.add("chat", className);
+    chatLi.innerHTML = `<p>${message}</p>`;
+    return chatLi;
+  };
+
+  const handleChat = () => {
+    const chatInput = document.querySelector('.chat-input textarea');
+    const userMessage = chatInput.value.trim();
+    if (!userMessage) return;
+
+    const chatBox = document.querySelector('.chatbox ul');
+    const outgoingChat = createChatLi(userMessage, "outgoing");
+    chatBox.appendChild(outgoingChat);
+    chatInput.value = "";
+  };
+  
   async function generateAnswer(){
     setAnswer("Loading...");
+    try{
     const response = await axios({
       url:"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyBinPBcEPyRSIxghwfG8QNW-rvcZ97KRAc",
       method:"post",
@@ -19,6 +38,10 @@ function App() {
     });
     (setAnswer(response['data']['candidates'][0]['content']['parts'][0]['text']));
   }
+  catch (error) {
+    setAnswer("Sorry, there was an error.");
+  }
+}
 
   return (
       <>
@@ -32,10 +55,6 @@ function App() {
         <div className="chatbox">
         <ul>
 
-            <li className="chat outgoing">
-                <p>Hey! How can I assist you today?</p>
-            </li>
-
             <li className="chat incoming">
             <img src="logo8.png" alt="Profile" className="profile-icon" />
                 <p>Hey!<br></br> How can I assist you today?</p>
@@ -47,7 +66,7 @@ function App() {
         
         <div className="chat-input">
             <textarea  value={question} onChange={(e) => setQuestion(e.target.value)} placeholder="Enter here..."   required></textarea>
-            <span id="sendbtn" className='send-btn' onClick={generateAnswer}><FontAwesomeIcon icon={faPaperPlane} /></span>
+            <span id="sendbtn" className='send-btn' onClick={() => { handleChat(); generateAnswer(); }}><FontAwesomeIcon icon={faPaperPlane} /></span>
         </div>
       </div>
       

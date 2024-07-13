@@ -75,7 +75,6 @@
 
 .chatbox .chat p{
   padding: 10px 15px;
-  margin-left: 0%;
   line-height: 1.5rem;
   align-content: right;
   box-sizing: border-box;
@@ -84,27 +83,35 @@
   font-size: 1rem;
 }
 
-.chatbox .incoming{
-  margin-right: 100%;
-  white-space: nowrap;
+.incoming{
+  justify-content: flex-start;
+  text-align: left;
+
 }
 
 .chatbox .incoming p{
   border: 1px solid black;
   border-radius: 10px 10px 10px 0;
+  max-width: 60%;
+  margin-right: 10px;
 }
 
 .chatbox .incoming img{
- align-content: flex-start;
-  margin: 0 2px 0 0;
+  order: -2;
+  margin-left: 10px;
   max-width:50px;
   height: 50px;
 }
 
+.outgoing {
+  justify-content: flex-end;
+  text-align: right;
+  margin-right: 6%;
+}
+
 .chatbox .outgoing p{
-  margin: 1px 30%  20px 20%;
-  margin-left: 48%;
-  white-space: nowrap;
+  align-items:flex-end ;
+  max-width: 60%;
   background-color: #3B76CD;
   color: white;
   border-radius: 10px 10px 0 10px ;
@@ -139,7 +146,7 @@
   position: absolute;
   align-items: center;
   justify-content: center;
-  padding-left: 35rem;
+  margin-left: 35rem;
   color: black;
   font-size: 1.2rem;
   cursor: pointer;
