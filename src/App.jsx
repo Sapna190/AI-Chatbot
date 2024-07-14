@@ -1,4 +1,4 @@
-import {  useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,19 +10,36 @@ function App() {
   const [answer, setAnswer] = useState("");
 
 
+  useEffect(() => {
+    const chatInput = document.querySelector('.chat-input textarea');
+    const inputInitHeight = chatInput.scrollHeight;
+
+    const adjustHeight = () => {
+      chatInput.style.height = `${inputInitHeight}px`; // Reset to initial height
+      chatInput.style.height = `${chatInput.scrollHeight}px`; // Set to scroll height
+    };
+
+    chatInput.addEventListener("input", adjustHeight);
+
+    return () => {
+      chatInput.removeEventListener("input", adjustHeight);
+    };
+  }, []);
+
   const createChatLi = (message, className) => {
-    const chatLi = document.createElement("li");
+    const chatLi = document.createElement("p");
     chatLi.classList.add("chat", className);
     if (className === "incoming") {
-      chatLi.innerHTML = `<img src="logo8.png" alt="Profile" className="profile-icon" /> <pre>${message}</pre>`;
+      chatLi.innerHTML = `<img src="logo8.png" alt="Profile" className="profile-icon" /> <p></p>`;
     } else {
-      chatLi.innerHTML = `<p>${message}</p>`;
+      chatLi.innerHTML = `<p></p>`;
     }
+    chatLi.querySelector("p").textContent = message;
     return chatLi;
   };
 
   async function generateAnswer(incomingChatLi){
-    const messageElement = incomingChatLi.querySelector("pre");
+    const messageElement = incomingChatLi.querySelector("p");
     try{
     const response = await axios({
       url:"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyBinPBcEPyRSIxghwfG8QNW-rvcZ97KRAc",
@@ -51,6 +68,7 @@ function App() {
     chatBox.appendChild(outgoingChat);
     chatInput.value = "";
     chatBox.scrollTo(0, chatBox.scrollHeight);
+    
 
     setTimeout(()=>{
       //Display thinking message..
@@ -61,6 +79,9 @@ function App() {
 
     }, 600);
   };
+
+
+ 
 
   
 
@@ -76,9 +97,7 @@ function App() {
         <div className="chatbox">
         <ul>
 
-            <li className="chat incoming">
-           
-            </li>
+            <li className="chat incoming"></li>
             
         </ul>
         </div>
