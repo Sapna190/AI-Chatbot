@@ -65,7 +65,7 @@ function App() {
     }
   }
 
-  const handleChat = () => {
+  function handleChat() {
     const chatInput = chatInputRef.current;
     const userMessage = chatInput.value.trim();
     if (!userMessage) return;
@@ -82,7 +82,7 @@ function App() {
       chatBox.scrollTo(0, chatBox.scrollHeight);
       generateAnswer(incomingChatLi);
     }, 600);
-  };
+  }
 
   return (
     <>
@@ -114,7 +114,7 @@ function App() {
           </span>
         </div>
       </div>
-      <div></div>
+      
     </>
   );
 }
