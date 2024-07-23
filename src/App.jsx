@@ -51,7 +51,7 @@ function App() {
     const messageElement = incomingChatLi.querySelector("p");
     try {
       const response = await axios({
-        url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=YOUR_API_KEY",
+        url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyD7cbzCIkT7kFNjqxZwFM6P-gyZm297KS0",
         method: "post",
         data: { contents: [{ parts: [{ text: question }] }] }
       });
@@ -110,7 +110,7 @@ function App() {
             className='send-btn'
             onClick={() => { handleChat(); generateAnswer(); }}
           >
-            <FontAwesomeIcon icon={faPaperPlane} />
+           <div ><FontAwesomeIcon icon={faPaperPlane} /></div> 
           </span>
         </div>
       </div>
