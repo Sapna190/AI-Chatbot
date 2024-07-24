@@ -3,10 +3,13 @@ import axios from 'axios';
 import './App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faSun, faMoon, faTimes } from '@fortawesome/free-solid-svg-icons';
+
 
 function App() {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const chatInputRef = useRef(null); // Ref for the chat input
   const chatBoxRef = useRef(null); // Ref for the chat box
 
@@ -35,6 +38,15 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    const savedChatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
+    savedChatHistory.forEach(message => {
+      const chatBox = chatBoxRef.current;
+      const chatLi = createChatLi(message.content, message.className);
+      chatBox.appendChild(chatLi);
+    });
+  }, []);
+
   const createChatLi = (message, className) => {
     const chatLi = document.createElement("p");
     chatLi.classList.add("chat", className);
@@ -57,6 +69,7 @@ function App() {
       });
       setAnswer(response.data.candidates[0].content.parts[0].text);
       messageElement.innerHTML = response.data.candidates[0].content.parts[0].text;
+      updateChatHistory({ content: response.data.candidates[0].content.parts[0].text, className: 'incoming' });
     } catch (error) {
       setAnswer("Sorry, there was an error.");
       messageElement.innerHTML = "Sorry, there was an error.";
@@ -73,6 +86,7 @@ function App() {
     const chatBox = chatBoxRef.current;
     const outgoingChat = createChatLi(userMessage, "outgoing");
     chatBox.appendChild(outgoingChat);
+    updateChatHistory({ content: userMessage, className: 'outgoing' });
     chatInput.value = "";
     chatBox.scrollTo(0, chatBox.scrollHeight);
 
@@ -84,10 +98,44 @@ function App() {
     }, 600);
   }
 
+  const toggleDarkMode = () => {
+    setIsDarkMode(prevMode => !prevMode);
+  };
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
+    }
+  }, [isDarkMode]);
+
+  const updateChatHistory = (message) => {
+    const chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
+    chatHistory.push(message);
+    localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
+  };
+
+  
+  const clearChatHistory = () => {
+    localStorage.removeItem('chatHistory');
+    const chatBox = chatBoxRef.current;
+    while (chatBox.firstChild) {
+      chatBox.removeChild(chatBox.firstChild);
+    }
+  };
+
   return (
     <>
-      <div className='chatbot'>
-        <header>AI-Chatbot</header>
+      <div className={`chatbot ${isDarkMode ? 'dark-mode' : ''}`}>
+        <header>AI-Chatbot  <span onClick={toggleDarkMode} className="toggle-dark-mode">
+          <FontAwesomeIcon icon={isDarkMode ? faSun : faMoon} />
+        </span>
+        <span onClick={clearChatHistory} className="clear-chat">
+            <FontAwesomeIcon icon={faTimes} />
+          </span>
+        </header>
+        
         <div className='ai'>
           <img src="icon3.png" alt="robot" />
           <p>Hii....there!<br />This is your AI assistant.</p>
