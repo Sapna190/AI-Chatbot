@@ -140,7 +140,7 @@
 .chat-input textarea{
   border: none;
   outline: none;
-  width: 36rem;
+  width: 35rem;
   font-size: 1rem;
   font-family: "Josefin Sans", sans-serif;
   font-weight: bold;
@@ -150,20 +150,22 @@
 
 .chat-input ::placeholder{
   color: rgb(77, 77, 77);
+ 
 }
 
 .chat-input span{
   position: absolute;
   align-items: center;
   justify-content: center;
-  margin-left: 35rem;
+  margin-left: 33.6rem;
   color: black;
   font-size: 1.2rem;
   cursor: pointer;
   align-self: center;
   visibility: hidden;
   padding: 0.8rem;
-
+  height: 55px;
+  line-height: 55px;
 }
 
 .chat-input textarea:valid ~ span{
@@ -173,8 +175,8 @@
 
 .clear-chat{
   cursor: pointer;
-  gap: 2px;
   font-size: 1.5rem;
+  padding: 1.5rem;
 }
 
 
@@ -185,11 +187,16 @@
 .toggle-dark-mode {
   cursor: pointer;
   font-size: 1.3rem;
+  margin-left: 57%;
+
 }
 
 .dark-mode.clear-chat{
   color: black;
+  
 }
+
+
 
 body.dark-mode {
   background-color: #000000;
@@ -224,98 +231,144 @@ body.dark-mode .chatbox {
   color: #ffffff;
 }
 
-
-
-
-/* Other dark mode specific styles */
-
-
-/*Responsive style*/
 @media (max-width: 1200px) {
   .chatbot {
+    right: 40%;
+    width: 60%;
+  }
+  
+  .chatbot header {
+    font-size: 10px;
+    padding-left: 20px;
+  }
+  
+  .chat-input textarea {
+    width:rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .chatbot {
     right: 10%;
-    width: 80%;
+    width: 70%;
+  }
+  
+  .chatbot header {
+    font-size: 22px;
+    padding-left: 10px;
+  }
+  
+  .chat-input textarea {
+    width: 38rem;
   }
 
-  .ai {
-    margin-right: 10%;
+  .chat-input span{
+    margin-left: 36.5rem;
   }
+
+  .toggle-dark-mode {
+    cursor: pointer;
+    font-size: 1.3rem;
+    margin-left: 70%;
+  
+  }
+  
 }
 
 @media (max-width: 768px) {
   .chatbot {
     right: 5%;
     width: 90%;
-    top: 20px;
-    bottom: 20px;
   }
-
+  
   .chatbot header {
-    font-size: 24px;
-    padding: 10px;
+    font-size: 23px;
+    padding-left: 30px;
   }
-
-  .ai img {
-    max-width: 40%;
-  }
-
-  .ai p {
-    font-size: 1.1rem;
-  }
-
-  .chatbox {
-    height: 250px;
-  }
-
+  
   .chat-input textarea {
-    width: 100%;
-    padding: 10px 5px 1px 15px;
+    width: 38rem;
   }
 
-  .chat-input span {
-    padding-left: 30rem;
+  .chat-input span{
+    margin-left: 36.5rem;
+  }
+
+  .toggle-dark-mode {
+    cursor: pointer;
+    font-size: 1.3rem;
+    margin-left: 65%;
+  
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 576px) {
   .chatbot {
     right: 0;
     width: 100%;
-    top: 10px;
-    bottom: 10px;
+    top: 0;
+    bottom: 0;
   }
-
+  
   .chatbot header {
-    font-size: 20px;
-    padding: 8px;
+    font-size: 18px;
+    padding-left: 5px;
+    text-align: center;
   }
-
-  .ai img {
-    max-width: 30%;
-  }
-
-  .ai p {
-    font-size: 1rem;
-  }
-
-  .chatbox {
-    height: 200px;
-  }
-
+  
   .chat-input {
     flex-direction: column;
-    padding: 10px;
+    align-items: flex-start;
+  }
+  
+  .chat-input textarea {
+    width: 31rem;
+    margin-left: 0;
+  }
+  
+  .chat-input span {
+    margin-left: 62.5rem;
+    width: 100%;
+    height: 55px;
+    margin-top: 5px;
+  }
+}
+
+@media (max-width: 392px){
+  .chatbot {
+    right: 0;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+  }
+  
+  .chatbot header {
+    font-size: 18px;
+    padding-left: 5px;
+    text-align: center;
+  }
+
+  .chatbot p{
+    font-size: 15px;
   }
 
   .chat-input textarea {
-    width: 100%;
-    padding: 10px;
+    width: 142%;
+    margin-left: 0;
   }
 
   .chat-input span {
-    position: static;
-    padding: 0;
-    margin-top: 10px;
-    visibility: visible; /* Always visible on small screens */
+    margin-left: 40rem;
+    width: 100%;
+    height: 55px;
+    margin-top: 5px;
   }
+
+  .toggle-dark-mode {
+    font-size: 1.3rem;
+    margin-left: 50%;
+  
+  }
+
+  
 }

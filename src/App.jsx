@@ -2,9 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
-import { faSun, faMoon, faTimes } from '@fortawesome/free-solid-svg-icons';
-
+import { faPaperPlane, faSun, faMoon, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
   const [question, setQuestion] = useState("");
@@ -48,7 +46,7 @@ function App() {
   }, []);
 
   const createChatLi = (message, className) => {
-    const chatLi = document.createElement("p");
+    const chatLi = document.createElement("li");
     chatLi.classList.add("chat", className);
     if (className === "incoming") {
       chatLi.innerHTML = `<img src="logo8.png" alt="Profile" className="profile-icon" /> <p></p>`;
@@ -59,18 +57,39 @@ function App() {
     return chatLi;
   };
 
-  async function generateAnswer(incomingChatLi){
+  async function generateAnswer(incomingChatLi, question) {
     const messageElement = incomingChatLi.querySelector("p");
     try {
+      console.log("question is:", question);
       const response = await axios({
-        url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyD7cbzCIkT7kFNjqxZwFM6P-gyZm297KS0",
+        url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyBinPBcEPyRSIxghwfG8QNW-rvcZ97KRAc",
         method: "post",
-        data: { contents: [{ parts: [{ text: question }] }] }
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: JSON.stringify({
+          contents: [
+            {
+              parts: [
+                { text: question }
+              ]
+            }
+          ]
+        })
       });
-      setAnswer(response.data.candidates[0].content.parts[0].text);
-      messageElement.innerHTML = response.data.candidates[0].content.parts[0].text;
-      updateChatHistory({ content: response.data.candidates[0].content.parts[0].text, className: 'incoming' });
+      let answerText = response.data.candidates[0].content.parts[0].text;
+      // Clean up the response
+    answerText = answerText.replace(/\*+/g, ''); // Remove all asterisks
+    answerText = answerText.replace(/\n+/g, '\n').trim(); // Remove extra newlines
+    answerText = answerText.split('\n').map(line => line.trim()).join('\n'); // Trim each line
+
+      setAnswer(answerText);
+      console.log(answerText);
+
+      messageElement.innerHTML = answerText;
+      updateChatHistory({ content: answerText, className: 'incoming' });
     } catch (error) {
+      console.error("Error:", error);
       setAnswer("Sorry, there was an error.");
       messageElement.innerHTML = "Sorry, there was an error.";
     } finally {
@@ -78,7 +97,8 @@ function App() {
     }
   }
 
-  function handleChat() {
+  function handleChat(e) {
+    e.preventDefault;
     const chatInput = chatInputRef.current;
     const userMessage = chatInput.value.trim();
     if (!userMessage) return;
@@ -94,7 +114,7 @@ function App() {
       const incomingChatLi = createChatLi("Thinking...", "incoming");
       chatBox.appendChild(incomingChatLi);
       chatBox.scrollTo(0, chatBox.scrollHeight);
-      generateAnswer(incomingChatLi);
+      generateAnswer(incomingChatLi, userMessage);
     }, 600);
   }
 
@@ -116,7 +136,6 @@ function App() {
     localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
   };
 
-  
   const clearChatHistory = () => {
     localStorage.removeItem('chatHistory');
     const chatBox = chatBoxRef.current;
@@ -128,10 +147,12 @@ function App() {
   return (
     <>
       <div className={`chatbot ${isDarkMode ? 'dark-mode' : ''}`}>
-        <header>AI-Chatbot  <span onClick={toggleDarkMode} className="toggle-dark-mode">
-          <FontAwesomeIcon icon={isDarkMode ? faSun : faMoon} />
-        </span>
-        <span onClick={clearChatHistory} className="clear-chat">
+        <header>
+          AI-Chatbot  
+          <span onClick={toggleDarkMode} className="toggle-dark-mode">
+            <FontAwesomeIcon icon={isDarkMode ? faSun : faMoon} />
+          </span>
+          <span onClick={clearChatHistory} className="clear-chat">
             <FontAwesomeIcon icon={faTimes} />
           </span>
         </header>
@@ -156,13 +177,12 @@ function App() {
           <span
             id="sendbtn"
             className='send-btn'
-            onClick={() => { handleChat(); generateAnswer(); }}
+            onClick={handleChat}
           >
-           <div ><FontAwesomeIcon icon={faPaperPlane} /></div> 
+            <FontAwesomeIcon icon={faPaperPlane} />
           </span>
         </div>
       </div>
-      
     </>
   );
 }
