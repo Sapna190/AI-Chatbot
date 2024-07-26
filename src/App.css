@@ -335,7 +335,7 @@ body.dark-mode .chatbox {
   }
 }
 
-@media (max-width: 370px){
+@media (max-width: 372px){
   .chatbot {
     right: 0;
     width: 100%;
