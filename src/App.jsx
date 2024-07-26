@@ -77,6 +77,8 @@ function App() {
           ]
         })
       });
+      console.log('API Response:', response.data);
+      if (response.data.candidates && response.data.candidates[0].content.parts[0]){
       let answerText = response.data.candidates[0].content.parts[0].text;
       // Clean up the response
     answerText = answerText.replace(/\*+/g, ''); // Remove all asterisks
@@ -88,6 +90,8 @@ function App() {
 
       messageElement.innerHTML = answerText;
       updateChatHistory({ content: answerText, className: 'incoming' });
+       } else {
+      throw new Error('Unexpected response structure');}
     } catch (error) {
       console.error("Error:", error);
       setAnswer("Sorry, there was an error.");
@@ -98,7 +102,7 @@ function App() {
   }
 
   function handleChat(e) {
-    e.preventDefault;
+    if (e) e.preventDefault();
     const chatInput = chatInputRef.current;
     const userMessage = chatInput.value.trim();
     if (!userMessage) return;
@@ -108,6 +112,8 @@ function App() {
     chatBox.appendChild(outgoingChat);
     updateChatHistory({ content: userMessage, className: 'outgoing' });
     chatInput.value = "";
+    chatInput.style.height = 'auto'; // Reset the height
+    setQuestion(""); // Clear the question state
     chatBox.scrollTo(0, chatBox.scrollHeight);
 
     setTimeout(() => {
