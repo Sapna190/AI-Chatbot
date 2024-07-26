@@ -350,16 +350,16 @@ body.dark-mode .chatbox {
   }
 
   .chatbot p{
-    font-size: 14px;
+    font-size: 12px;
   }
 
   .chat-input textarea {
-    width: 128%;
+    width: 118%;
     margin-left: 0;
   }
 
   .chat-input span {
-    margin-left: 37.5rem;
+    margin-left: 34.5rem;
     width: 100%;
     height: 55px;
     margin-top: 5px;
@@ -372,7 +372,7 @@ body.dark-mode .chatbox {
   }
 
   .dark-mode.chatbot header{
-    font-size: 18px;
+    font-size: 16px;
     padding-left: 5px;
     text-align: center;
 
