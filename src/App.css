@@ -9,7 +9,7 @@
   position: fixed;
   right: 28%;
   top:40px;
-  bottom:40px;
+  bottom:50px;
   width: 43%;
   background: white;
 }
@@ -35,6 +35,7 @@
   padding: 7px;
   border-style: none;
   left:20%;
+  
 }
 
 .ai{
@@ -334,7 +335,7 @@ body.dark-mode .chatbox {
   }
 }
 
-@media (max-width: 392px){
+@media (max-width: 370px){
   .chatbot {
     right: 0;
     width: 100%;
@@ -349,16 +350,16 @@ body.dark-mode .chatbox {
   }
 
   .chatbot p{
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .chat-input textarea {
-    width: 142%;
+    width: 128%;
     margin-left: 0;
   }
 
   .chat-input span {
-    margin-left: 40rem;
+    margin-left: 37.5rem;
     width: 100%;
     height: 55px;
     margin-top: 5px;
@@ -366,8 +367,20 @@ body.dark-mode .chatbox {
 
   .toggle-dark-mode {
     font-size: 1.3rem;
-    margin-left: 50%;
+    margin-left: 48%;
   
+  }
+
+  .dark-mode.chatbot header{
+    font-size: 18px;
+    padding-left: 5px;
+    text-align: center;
+
+  }
+
+  .chatbox{
+    height: 438px;
+    overflow-y: auto;
   }
 
   
