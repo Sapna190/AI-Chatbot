@@ -12,14 +12,6 @@ function App() {
   const chatBoxRef = useRef(null); // Ref for the chat box
 
   useEffect(() => {
-    const chatInput = chatInputRef.current;
-    const inputInitHeight = chatInput.scrollHeight;
-
-    const adjustHeight = () => {
-      chatInput.style.height = `${inputInitHeight}px`;
-      chatInput.style.height = `${chatInput.scrollHeight}px`;
-    };
-
     const handleKeyDown = (event) => {
       if (event.key === "Enter" && !event.shiftKey) {
         event.preventDefault();
@@ -27,11 +19,10 @@ function App() {
       }
     };
 
-    chatInput.addEventListener("input", adjustHeight);
+    const chatInput = chatInputRef.current;
     chatInput.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      chatInput.removeEventListener("input", adjustHeight);
       chatInput.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
@@ -61,20 +52,6 @@ function App() {
     const messageElement = incomingChatLi.querySelector("p");
     try {
       console.log("question is:", question);
-       // Retrieve chat history
-       const chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
-
-       // Prepare the conversation history for the API
-       const conversation = chatHistory.map(message => ({
-         role: message.className === 'incoming' ? 'assistant' : 'user',
-         content: message.content
-       }));
- 
-       // Add the latest question
-       conversation.push({
-         role: 'user',
-         content: question
-       });
       const response = await axios({
         url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyBinPBcEPyRSIxghwfG8QNW-rvcZ97KRAc",
         method: "post",
@@ -126,7 +103,6 @@ function App() {
     chatBox.appendChild(outgoingChat);
     updateChatHistory({ content: userMessage, className: 'outgoing' });
     chatInput.value = "";
-    chatInput.style.height = 'auto'; // Reset the height
     setQuestion(""); // Clear the question state
     chatBox.scrollTo(0, chatBox.scrollHeight);
 
@@ -193,7 +169,6 @@ function App() {
             onChange={(e) => setQuestion(e.target.value)}
             placeholder="Enter here..."
             required
-            style={{height: '40px'}} // Set the initial height here
           ></textarea>
           <span
             id="sendbtn"
