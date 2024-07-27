@@ -12,6 +12,14 @@ function App() {
   const chatBoxRef = useRef(null); // Ref for the chat box
 
   useEffect(() => {
+    const chatInput = chatInputRef.current;
+    const inputInitHeight = chatInput.scrollHeight;
+
+    const adjustHeight = () => {
+      chatInput.style.height = `${inputInitHeight}px`;
+      chatInput.style.height = `${chatInput.scrollHeight}px`;
+    };
+
     const handleKeyDown = (event) => {
       if (event.key === "Enter" && !event.shiftKey) {
         event.preventDefault();
@@ -19,10 +27,11 @@ function App() {
       }
     };
 
-    const chatInput = chatInputRef.current;
+    chatInput.addEventListener("input", adjustHeight);
     chatInput.addEventListener("keydown", handleKeyDown);
 
     return () => {
+      chatInput.removeEventListener("input", adjustHeight);
       chatInput.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
@@ -52,6 +61,22 @@ function App() {
     const messageElement = incomingChatLi.querySelector("p");
     try {
       console.log("question is:", question);
+
+      // Retrieve chat history
+      const chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
+
+      // Prepare the conversation history for the API
+      const conversation = chatHistory.map(message => ({
+        role: message.className === 'incoming' ? 'assistant' : 'user',
+        content: message.content
+      }));
+
+      // Add the latest question
+      conversation.push({
+        role: 'user',
+        content: question
+      });
+
       const response = await axios({
         url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyBinPBcEPyRSIxghwfG8QNW-rvcZ97KRAc",
         method: "post",
@@ -61,28 +86,30 @@ function App() {
         data: JSON.stringify({
           contents: [
             {
-              parts: [
-                { text: question }
-              ]
+              parts: conversation.map(conv => ({ text: conv.content }))
             }
           ]
         })
       });
+
       console.log('API Response:', response.data);
-      if (response.data.candidates && response.data.candidates[0].content.parts[0]){
-      let answerText = response.data.candidates[0].content.parts[0].text;
-      // Clean up the response
-      answerText = answerText.replace(/\*+/g, ''); // Remove all asterisks
-      answerText = answerText.replace(/\n+/g, '\n').trim(); // Remove extra newlines
-      answerText = answerText.split('\n').map(line => line.trim()).join('\n'); // Trim each line
 
-      setAnswer(answerText);
-      console.log(answerText);
+      if (response.data.candidates && response.data.candidates[0].content.parts[0]) {
+        let answerText = response.data.candidates[0].content.parts[0].text;
 
-      messageElement.innerHTML = answerText;
-      updateChatHistory({ content: answerText, className: 'incoming' });
-       } else {
-      throw new Error('Unexpected response structure');}
+        // Clean up the response
+        answerText = answerText.replace(/\*+/g, ''); // Remove all asterisks
+        answerText = answerText.replace(/\n+/g, '\n').trim(); // Remove extra newlines
+        answerText = answerText.split('\n').map(line => line.trim()).join('\n'); // Trim each line
+
+        setAnswer(answerText);
+        console.log(answerText);
+
+        messageElement.innerHTML = answerText;
+        updateChatHistory({ content: answerText, className: 'incoming' });
+      } else {
+        throw new Error('Unexpected response structure');
+      }
     } catch (error) {
       console.error("Error:", error);
       setAnswer("Sorry, there was an error.");
@@ -98,11 +125,13 @@ function App() {
     const userMessage = chatInput.value.trim();
     if (!userMessage) return;
 
+    
     const chatBox = chatBoxRef.current;
     const outgoingChat = createChatLi(userMessage, "outgoing");
     chatBox.appendChild(outgoingChat);
     updateChatHistory({ content: userMessage, className: 'outgoing' });
     chatInput.value = "";
+    chatInput.style.height = 'auto'; // Reset the height
     setQuestion(""); // Clear the question state
     chatBox.scrollTo(0, chatBox.scrollHeight);
 
@@ -169,6 +198,7 @@ function App() {
             onChange={(e) => setQuestion(e.target.value)}
             placeholder="Enter here..."
             required
+            style={{ height: '40px' }} // Set the initial height here
           ></textarea>
           <span
             id="sendbtn"
