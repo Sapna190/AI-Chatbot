@@ -49,7 +49,7 @@ function App() {
     const chatLi = document.createElement("li");
     chatLi.classList.add("chat", className);
     if (className === "incoming") {
-      chatLi.innerHTML = `<img src="logo8.png" alt="Profile" className="profile-icon" /> <p></p>`;
+      chatLi.innerHTML = `<img src="/logo8.png" alt="Profile" className="profile-icon" /> <p></p>`;
     } else {
       chatLi.innerHTML = `<p></p>`;
     }
@@ -78,19 +78,18 @@ function App() {
       });
 
       const response = await axios({
-        url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyBinPBcEPyRSIxghwfG8QNW-rvcZ97KRAc",
+        url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyDQc9bxkxAYJl8W4tTVBXpocaxqiu-r_dw",
         method: "post",
         headers: {
           'Content-Type': 'application/json'
         },
         data: JSON.stringify({
-          contents: [
-            {
-              parts: conversation.map(conv => ({ text: conv.content }))
-            }
-          ]
+          contents: conversation.map(conv => ({
+            role: conv.role,
+            parts: [{ text: conv.content }]
+          }))
         })
-      });
+      });        
 
       console.log('API Response:', response.data);
 
@@ -111,10 +110,12 @@ function App() {
         throw new Error('Unexpected response structure');
       }
     } catch (error) {
-      console.error("Error:", error);
-      setAnswer("Sorry, there was an error.");
-      messageElement.innerHTML = "Sorry, there was an error.";
-    } finally {
+      console.error("API Error:", error.response?.data || error.message);
+      const errorMsg = error.response?.data?.error?.message || "Sorry, something went wrong.";
+      setAnswer(errorMsg);
+      messageElement.innerHTML = errorMsg;
+    }
+     finally {
       chatBoxRef.current.scrollTo(0, chatBoxRef.current.scrollHeight);
     }
   }
@@ -183,7 +184,7 @@ function App() {
         </header>
         
         <div className='ai'>
-          <img src="icon3.png" alt="robot" />
+          <img src="/icon3.png" alt="robot" />
           <p>Hii....there!<br />This is your AI assistant.</p>
         </div>
         <div className="chatbox" ref={chatBoxRef}>
